@@ -14,8 +14,8 @@ namespace TieredWorld.Core
     {
         public interface IConfig
         {
-            double HostileTierDistanceFromWorldCenter { get; }
-            string NotificationAuthorName { get; }
+            float HostileTierDistance { get; }
+            string NotificationName { get; }
             string HostileTierMessage { get; }
             string PeacefulTierMessage { get; }
         }
@@ -63,14 +63,14 @@ namespace TieredWorld.Core
             var distance = position.Length();
             var lastDistance = lastPosition.Length();
 
-            if (distance > _config.HostileTierDistanceFromWorldCenter &&
-                lastDistance < _config.HostileTierDistanceFromWorldCenter)
+            if (distance > _config.HostileTierDistance &&
+                lastDistance < _config.HostileTierDistance)
             {
                 Notify(steamId, Color.Red, _config.HostileTierMessage);
             }
 
-            if (distance < _config.HostileTierDistanceFromWorldCenter &&
-                lastDistance > _config.HostileTierDistanceFromWorldCenter)
+            if (distance < _config.HostileTierDistance &&
+                lastDistance > _config.HostileTierDistance)
             {
                 Notify(steamId, Color.White, _config.PeacefulTierMessage);
             }
@@ -78,7 +78,7 @@ namespace TieredWorld.Core
 
         void Notify(ulong steamId, Color color, string message)
         {
-            _chatManager.SendMessageAsOther(_config.NotificationAuthorName, message, color, steamId);
+            _chatManager.SendMessageAsOther(_config.NotificationName, message, color, steamId);
         }
     }
 }

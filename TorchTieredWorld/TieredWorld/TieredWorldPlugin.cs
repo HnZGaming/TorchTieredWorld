@@ -48,6 +48,7 @@ namespace TieredWorld
             _cancellationTokenSource = new CancellationTokenSource();
 
             MySafeZoneComponentPatch.Plugin = this;
+            MySpaceRespawnComponentPatch.Config = Config;
         }
 
         void OnGameLoaded()
@@ -73,7 +74,7 @@ namespace TieredWorld
 
             var entityPosition = entity.PositionComp.GetPosition();
             var distance = entityPosition.Length();
-            var permitted = distance < Config.PlayerSafeZonePermittedDistanceFromWorldCenter;
+            var permitted = distance < Config.SafeWorldRadius;
             Log.Info($"Player SafeZone: {entityPosition}, {distance}");
 
             if (permitted) return true;

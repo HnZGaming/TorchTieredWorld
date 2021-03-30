@@ -164,6 +164,7 @@
     <ItemGroup>
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="TieredWorld.Core.Patches\MySafeZoneComponentPatch.cs" />
+        <Compile Include="TieredWorld.Core.Patches\MySpaceRespawnComponentPatch.cs" />
         <Compile Include="TieredWorld.Core\TierNotificationCenter.cs" />
         <Compile Include="TieredWorld\TieredWorldCommandModule.cs" />
         <Compile Include="TieredWorld\TieredWorldConfig.cs" />
