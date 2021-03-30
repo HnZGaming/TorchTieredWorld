@@ -6,16 +6,17 @@ using Torch.Views;
 
 namespace TieredWorld
 {
-    public sealed class TieredWorldConfig : ViewModel, TierNotificationCenter.IConfig, MySpaceRespawnComponentPatch.IConfig
+    public sealed class TieredWorldConfig : ViewModel, TierWorldMessenger.IConfig, MySpaceRespawnComponentPatch.IConfig
     {
         const string MessageGroupName = "Messages";
-        float _safeZoneRadius = 5000000;
+
+        bool _enableSafeSpawn = true;
+        float _safeZoneRadius = 5000000; //meters
         string _notificationName = "Tiered World";
         string _hostileTierMessage = "WARNING! You've entered a hostile part of the galaxy. Get closer to the Earth planet to retreat!";
         string _peacefulTierMessage = "You're now safe from all the hostile stuff (or most of it, at least).";
-        bool _enableSafeSpawn = true;
 
-        float TierNotificationCenter.IConfig.HostileTierDistance => _safeZoneRadius;
+        float TierWorldMessenger.IConfig.HostileTierDistance => _safeZoneRadius;
         float MySpaceRespawnComponentPatch.IConfig.SafeSpawnRadius => _safeZoneRadius;
 
         [XmlElement]
@@ -35,15 +36,15 @@ namespace TieredWorld
         }
 
         [XmlElement]
-        [Display(Name = "Message name", GroupName = MessageGroupName)]
-        public string NotificationName
+        [Display(Name = "Message name", GroupName = MessageGroupName, Order = 1)]
+        public string MessageName
         {
             get => _notificationName;
             set => SetValue(ref _notificationName, value);
         }
 
         [XmlElement]
-        [Display(Name = "Hostile tier message", GroupName = MessageGroupName)]
+        [Display(Name = "Hostile tier message", GroupName = MessageGroupName, Order = 2)]
         public string HostileTierMessage
         {
             get => _hostileTierMessage;
@@ -51,7 +52,7 @@ namespace TieredWorld
         }
 
         [XmlElement]
-        [Display(Name = "Peaceful tier message", GroupName = MessageGroupName)]
+        [Display(Name = "Peaceful tier message", GroupName = MessageGroupName, Order = 3)]
         public string PeacefulTierMessage
         {
             get => _peacefulTierMessage;

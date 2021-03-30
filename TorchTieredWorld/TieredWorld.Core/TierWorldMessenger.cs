@@ -10,12 +10,12 @@ using VRageMath;
 
 namespace TieredWorld.Core
 {
-    public sealed class TierNotificationCenter
+    public sealed class TierWorldMessenger
     {
         public interface IConfig
         {
             float HostileTierDistance { get; }
-            string NotificationName { get; }
+            string MessageName { get; }
             string HostileTierMessage { get; }
             string PeacefulTierMessage { get; }
         }
@@ -24,7 +24,7 @@ namespace TieredWorld.Core
         readonly IChatManagerServer _chatManager;
         readonly Dictionary<ulong, Vector3D> _lastPositions;
 
-        public TierNotificationCenter(IConfig config, IChatManagerServer chatManager)
+        public TierWorldMessenger(IConfig config, IChatManagerServer chatManager)
         {
             _config = config;
             _chatManager = chatManager;
@@ -78,7 +78,7 @@ namespace TieredWorld.Core
 
         void Notify(ulong steamId, Color color, string message)
         {
-            _chatManager.SendMessageAsOther(_config.NotificationName, message, color, steamId);
+            _chatManager.SendMessageAsOther(_config.MessageName, message, color, steamId);
         }
     }
 }

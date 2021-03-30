@@ -28,7 +28,7 @@ namespace TieredWorld
 
         CancellationTokenSource _cancellationTokenSource;
         IChatManagerServer _chatManager;
-        TierNotificationCenter _tierNotificationCenter;
+        TierWorldMessenger _tierWorldMessenger;
 
         public UserControl GetControl() => _config.GetOrCreateUserControl(ref _userControl);
         public TieredWorldConfig Config => _config.Data;
@@ -56,8 +56,8 @@ namespace TieredWorld
             _chatManager = Torch.CurrentSession.Managers.GetManager<IChatManagerServer>();
             _chatManager.OrThrow("Chat manager not found");
 
-            _tierNotificationCenter = new TierNotificationCenter(Config, _chatManager);
-            TaskUtils.RunUntilCancelledAsync(_tierNotificationCenter.Run, _cancellationTokenSource.Token).Forget(Log);
+            _tierWorldMessenger = new TierWorldMessenger(Config, _chatManager);
+            TaskUtils.RunUntilCancelledAsync(_tierWorldMessenger.Run, _cancellationTokenSource.Token).Forget(Log);
         }
 
         void OnGameUnloaded()

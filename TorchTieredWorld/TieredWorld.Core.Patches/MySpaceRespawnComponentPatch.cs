@@ -44,10 +44,8 @@ namespace TieredWorld.Core.Patches
         static IEnumerable<MsilInstruction> GetSpawnPositionInSpaceTranspiler(IEnumerable<MsilInstruction> ins)
         {
             var insl = ins.ToList();
-            for (var i = 0; i < insl.Count; i++)
+            foreach (var k in insl)
             {
-                var k = insl[i];
-
                 // FROM: call bool [Sandbox.Game]Sandbox.Game.Entities.MyEntities::IsWorldLimited()
                 if (k.OpCode == OpCodes.Call && k.Operand is MsilOperandInline<MethodBase> m && m.Value.Name == "IsWorldLimited")
                 {
