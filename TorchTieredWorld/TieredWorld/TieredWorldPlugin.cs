@@ -40,8 +40,6 @@ namespace TieredWorld
             this.ListenOnGameLoaded(OnGameLoaded);
             this.ListenOnGameUnloading(OnGameUnloaded);
 
-            GameLoopObserverManager.Add(Torch);
-
             var configPath = this.MakeConfigFilePath();
             _config = Persistent<TieredWorldConfig>.Load(configPath);
 
